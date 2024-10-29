@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: production
     
     - name: Create Pull Request to production
       uses: peter-evans/create-pull-request@v7
