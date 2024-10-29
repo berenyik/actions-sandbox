@@ -1,6 +1,6 @@
-name: Create UAT Fix PR
+name: Create PR from UAT to Production
 
-on:  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   create-uat-fix-pr:
@@ -15,14 +15,14 @@ jobs:
       - name: create new branch
         run: |
           git fetch origin uat
-          git checkout -b uat_fix origin/uat
-          git push origin uat_fix
+          git checkout -b release/release_uat_fix origin/uat
+          git push origin release/release_uat_fix
 
       - name: Pull request létrehozása GitHub CLI-vel
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
         run: |
-            gh pr create --title "Automatikus PR a UAT Fix branch-ről" \
-                         --body "$(cat ./.github/pull_request_template.md)" \
-                         --base production \
-                         --head uat_fix \
+          gh pr create --title "UAT to Production" \
+                       --body "$(cat ./.github/pull_request_template_uat_to_prod.md)" \
+                       --base production \
+                       --head release/release_uat_fix \
