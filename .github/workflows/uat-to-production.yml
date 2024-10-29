@@ -23,7 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
         run: |
             gh pr create --title "Automatikus PR a UAT Fix branch-ről" \
-                         --body "Ez egy automatikus PR az origin/uat-ból létrehozott uat_fix branch-ből az origin/production-ra." \
                          --base production \
                          --head uat_fix \
                          --template "./.github/pull_request_template.md"
