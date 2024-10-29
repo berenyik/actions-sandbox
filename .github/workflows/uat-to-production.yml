@@ -18,11 +18,10 @@ jobs:
           git checkout -b uat_fix origin/uat
           git push origin uat_fix
 
-      - name: Pull request létrehozása
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.MY_GITHUB_PAT }}
-          base: uat_fix
-          branch: production
-          title: "Automatikus PR a UAT Fix branch-ről"
-          body: "Ez egy automatikus PR az origin/uat-ból létrehozott uat_fix branch-ből az origin/production-ra."
+      - name: Pull request létrehozása GitHub CLI-vel
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
+        run: |
+            gh pr create --title "Automatikus PR a UAT Fix branch-ről" \
+                         --body "Ez egy automatikus PR az origin/uat-ból létrehozott uat_fix branch-ből az origin/production-ra." \
+                         --base production \
