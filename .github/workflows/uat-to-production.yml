@@ -17,5 +17,5 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: uat
         title: 'Automated PR from uat to production'
-        body-path: "./.github/pull_request_template.md"
+        body: | klacsacascascas
         draft: false
