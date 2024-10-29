@@ -23,6 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
         run: |
           gh pr create --title "UAT to Production" \
-                       --body "$(cat ./.github/pull_request_template.md)" \
+                       --body "$(cat ./.github/pull_request_template_uat_to_prod.md)" \
                        --base production \
                        --head release/release_uat_fix \
