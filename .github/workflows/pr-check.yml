@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: title check
-        uses: morrisoncole/pr-lint-action@v1.7.0
+        uses: morrisoncole/pr-lint-action@v1.7.1
         with:
           title-regex: "TERKO3-[0-9]+: [\\w\\s]+"
           on-failed-regex-fail-action: true
           on-failed-regex-request-changes: true
           on-failed-regex-create-review: true
           on-failed-regex-comment: |
-            ⚠️ PR title failed linting rules. It should follow the pattern: `<JIRA-number>: <summary>`
+            ⚠️ PR title failed linting rules. It should follow the pattern: `<JIRA-number>: <summary>, UAT to Production`
 
-            e.g. `TERKO3-123456: My awesome feature`
+            e.g. `TERKO3-123456: My awesome feature` or UAT to Production
           on-succeeded-regex-dismiss-review-comment: |
             ✅ Success! PR title matches pattern `<JIRA-number>: <summary>`
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
