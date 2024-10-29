@@ -15,8 +15,7 @@ jobs:
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        base: production
-        branch: uat-kacsa
+        branch: uat
         title: 'Automated PR from uat to production'
         body-path: "./.github/pull_request_template.md"
         draft: false
