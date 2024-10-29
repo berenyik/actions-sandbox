@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: title check
-        uses: morrisoncole/pr-lint-action@v1.7.0
+        uses: morrisoncole/pr-lint-action@v1.7.1
         with:
-          title-regex: "TERKO3-[0-9]+: [\\w\\s]+"
+          title-regex: "(TERKO3-[0-9]+: [\\w\\s]+|UAT to Production)"
           on-failed-regex-fail-action: true
           on-failed-regex-request-changes: true
           on-failed-regex-create-review: true
@@ -28,7 +28,7 @@ jobs:
             ✅ Success! PR title matches pattern `<JIRA-number>: <summary>`
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: description check
         uses: jadrol/pr-description-checker-action@v1.0.0
         id: description-checker
@@ -41,6 +41,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: branch name check
-        uses: lekterable/branchlint-action@1.2.0
+        uses: lekterable/branchlint-action@2.1.0
         with:
-          allowed: /^(feature|feat|fix|bug|bugfix|hotfix|chore)\/TERKO3-[0-9]+[-_]+[a-z_0-9]+$|^release\/release_[0-9]+_[0-9]+$/
+          allowed: |
+            ^(feature|feat|fix|bug|bugfix|hotfix|chore)\/TERKO3-[0-9]+[-_]+[a-z_0-9]+$ |
+            ^release\/release_[0-9]+_[0-9]+$ |
+            ^release\/release_uat_fix$
