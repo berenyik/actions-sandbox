@@ -1,17 +1,28 @@
-name: Create UAT to Production Pull Request
+name: Create UAT Fix PR
 
-on: workflow_dispatch
+on:  workflow_dispatch
 
 jobs:
-  create-pr:
+  create-uat-fix-pr:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Create Pull Request from UAT to Production
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: create new branch
         run: |
-            gh pr create --base production --head uat --title "Automated PR: UAT to Production" --body "This is an automated pull request from the UAT environment to Production."
+          git fetch origin uat
+          git checkout -b uat_fix origin/uat
+          git push origin uat_fix
+
+      - name: Pull request létrehozása
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.MY_GITHUB_PAT }}
+          base: production
+          branch: uat_fix
+          title: "Automatikus PR a UAT Fix branch-ről"
+          body: "Ez egy automatikus PR az origin/uat-ból létrehozott uat_fix branch-ből az origin/production-ra."
