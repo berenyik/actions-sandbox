@@ -11,5 +11,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create Pull Request from UAT to Production
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             gh pr create --base production --head uat --title "Automated PR: UAT to Production" --body "This is an automated pull request from the UAT environment to Production."
