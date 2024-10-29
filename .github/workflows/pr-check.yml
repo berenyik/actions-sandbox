@@ -1,0 +1,46 @@
+name: PR check
+
+on:
+  pull_request:
+    # By default, a workflow only runs when a pull_request's activity type is opened, synchronize, or reopened. We
+    # explicity override here so that PR titles are re-linted when the PR text content is edited.
+    #
+    # Possible values: https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  check:
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: title check
+        uses: morrisoncole/pr-lint-action@v1.7.0
+        with:
+          title-regex: "TERKO3-[0-9]+: [\\w\\s]+"
+          on-failed-regex-fail-action: true
+          on-failed-regex-request-changes: true
+          on-failed-regex-create-review: true
+          on-failed-regex-comment: |
+            ⚠️ PR title failed linting rules. It should follow the pattern: `<JIRA-number>: <summary>`
+
+            e.g. `TERKO3-123456: My awesome feature`
+          on-succeeded-regex-dismiss-review-comment: |
+            ✅ Success! PR title matches pattern `<JIRA-number>: <summary>`
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - uses: actions/checkout@v3
+      - name: description check
+        uses: jadrol/pr-description-checker-action@v1.0.0
+        id: description-checker
+        with:
+          template-path: './.github/pull_request_template.md'
+          comment-template-not-filled: |
+            ⚠️ Please add details of your code changes to PR description
+          comment-empty-description: |
+            ⚠️ Please add details of your code changes to PR description
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: branch name check
+        uses: lekterable/branchlint-action@1.2.0
+        with:
+          allowed: /^(feature|feat|fix|bug|bugfix|hotfix|chore)\/TERKO3-[0-9]+[-_]+[a-z_0-9]+$|^release\/release_[0-9]+_[0-9]+$/
