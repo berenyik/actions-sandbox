@@ -7,14 +7,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: production
     
     - name: Create Pull Request to production
       uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        base: production
         branch: uat 
         title: 'Automated PR from uat to production'
         body-path: "./.github/pull_request_template.md"
