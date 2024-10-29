@@ -43,4 +43,7 @@ jobs:
       - name: branch name check
         uses: lekterable/branchlint-action@2.1.0
         with:
-          allowed: /^(feature|feat|fix|bug|bugfix|hotfix|chore)\/TERKO3-[0-9]+[-_]+[a-z_0-9]+$|^release\/release_[0-9]+_[0-9]+$|^release\/release_uat_fix$/
+          allowed: |
+            ^(feature|feat|fix|bug|bugfix|hotfix|chore)/TERKO3-[0-9]+[-_]+[a-z_0-9]+$
+            ^release/release_[0-9]+_[0-9]+$
+            ^release/release_uat_fix$
