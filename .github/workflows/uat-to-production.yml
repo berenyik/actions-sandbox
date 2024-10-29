@@ -19,10 +19,10 @@ jobs:
           git push origin uat_fix
 
       - name: Pull request létrehozása
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.MY_GITHUB_PAT }}
-          base: production
-          branch: uat_fix
+          base: uat_fix
+          branch: production
           title: "Automatikus PR a UAT Fix branch-ről"
           body: "Ez egy automatikus PR az origin/uat-ból létrehozott uat_fix branch-ből az origin/production-ra."
