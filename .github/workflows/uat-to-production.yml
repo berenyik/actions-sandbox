@@ -16,7 +16,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         base: production
-        branch: uat 
+        branch: uat-kacsa
         title: 'Automated PR from uat to production'
         body-path: "./.github/pull_request_template.md"
         draft: false
