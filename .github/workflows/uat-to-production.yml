@@ -1,23 +1,19 @@
 name: Create PR from uat to production
 
-on:
-  push:
-    branches:
-      - uat
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v4
-
+    - uses: actions/checkout@v4
+      with:
+        ref: production
+    
     - name: Create Pull Request to production
       uses: peter-evans/create-pull-request@v7
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         branch: uat 
         title: 'Automated PR from uat to production'
         body-path: "./.github/pull_request_template.md"
