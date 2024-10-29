@@ -17,5 +17,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: uat
         title: 'Automated PR from uat to production'
-        body: | klacsacascascas
+        body: | 
+          klacsacascascas
         draft: false
