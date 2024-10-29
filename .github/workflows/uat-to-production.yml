@@ -1,7 +1,6 @@
 name: Create UAT to Production Pull Request
 
-on:
-  workflow_dispatch:  # Allows manual trigger from GitHub Actions interface
+on: workflow_dispatch
 
 jobs:
   create-pr:
@@ -9,14 +8,8 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Checks out your repository code
+        uses: actions/checkout@v4
 
       - name: Create Pull Request from UAT to Production
-        uses: peter-evans/create-pull-request@v7  # Specify the current version
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: production  # Target branch for PR
-          branch: uat  # Source branch for PR
-          title: "Merge UAT changes to Production"
-          body: "This pull request merges changes from `uat` to `production`."
-          draft: false  # Optional: if true, creates a draft pull request
+        run: |
+            gh pr create --base production --head uat --title "Automated PR: UAT to Production" --body "This is an automated pull request from the UAT environment to Production."
