@@ -25,4 +25,4 @@ jobs:
             gh pr create --title "Automatikus PR a UAT Fix branch-ről" \
                          --base production \
                          --head uat_fix \
-                         --template "./.github/pull_request_template.md"
+                         --template "pull_request_template.md"
