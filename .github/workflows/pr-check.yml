@@ -34,6 +34,10 @@ jobs:
         id: description-checker
         with:
           template-path: './.github/pull_request_template.md'
+          comment-template-not-filled: |
+            ⚠️ Please add details of your code changes to PR description
+          comment-empty-description: |
+            ⚠️ Please add details of your code changes to PR description
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: branch name check
