@@ -23,6 +23,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_PAT }}
         run: |
             gh pr create --title "Automatikus PR a UAT Fix branch-ről" \
-                         --body "$(cat ./.github/pull_request_template.md)"
+                         --body "$(cat ./.github/pull_request_template.md)" \
                          --base production \
                          --head uat_fix \
