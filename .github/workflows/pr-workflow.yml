@@ -1,0 +1,28 @@
+name: Pull request workflow
+
+on:
+  pull_request:
+    branches: ['develop', 'production', 'production_hotfix', 'uat', 'release/release*']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.merge_commit_sha }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, test and lint
+    # https://github.com/actions/runner-images/issues/6686 -> reason of downgraded ubuntu
+    runs-on: ubuntu-20.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run prettier:check
+      - run: npm run lint
+      - run: npm run htmlCheck
+      - run: npm run test:headless
+      - run: npm run build
